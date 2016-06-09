@@ -2,13 +2,23 @@
   "name": "gulp-react-boilerplate",
   "version": "0.0.1",
   "description": "Gulp + ReactJS + SASS",
-  "main": "build/app.js",
+  "main": "src/js/server/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp build",
+    "dev": "gulp",
+    "start": "node src/js/server/app.js"
   },
   "author": "Roman Kuzovlev <rkuzovlev@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "alt": "^0.18.4",
+    "babel-core": "^6.9.1",
+    "babel-polyfill": "^6.9.1",
+    "iso": "^5.2.0",
+    "koa": "^1.2.0",
+    "koa-router": "^5.4.0",
+    "koa-static": "^2.0.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0"
   },
@@ -21,8 +31,10 @@
     "gulp-clean-css": "^2.0.8",
     "gulp-copy": "0.0.2",
     "gulp-eslint": "^2.0.0",
+    "gulp-gzip": "^1.4.0",
     "gulp-sass": "^2.3.1",
     "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.3",
     "gulp-watch": "^4.3.6",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",

@@ -9,37 +9,51 @@ const buff = require('vinyl-buffer');
 const watchify = require('watchify');
 const copy = require('gulp-copy');
 const cleanCSS = require('gulp-clean-css');
+const uglify = require('gulp-uglify');
+const gzip = require('gulp-gzip');
 
 
-function compile(watch) {
-	var bundler = watchify(browserify('src/js/app.js', { debug: true }).transform(babelify));
 
-	function rebundle() {
-		bundler.bundle()
-			.on('error', function(err) { console.error(err); this.emit('end'); })
-			.pipe(source('app.js'))
-			.pipe(buff())
-			.pipe(sourcemaps.init({ loadMaps: true }))
-			.pipe(sourcemaps.write('./'))
-			.pipe(gulp.dest('./dist'));
-	}
+function compile(watch, prod) {
+	var bundler, bf = browserify('src/js/client/app.js', { debug: true });
 
 	if (watch) {
+		bundler = watchify(bf).transform(babelify);
 		bundler.on('update', function() {
 			console.log('-> bundling...');
 			rebundle();
 		});
+	} else {
+		bundler = bf.transform(babelify);
 	}
+
+	function rebundle() {
+		var p = bundler.bundle()
+			.on('error', function(err) { console.error(err); this.emit('end'); })
+			.pipe(source('app.js'))
+			.pipe(buff());
+		
+			if (prod){
+				p = p.pipe(uglify())
+			} else {
+				p = p.pipe(sourcemaps.init({ loadMaps: true }))
+				.pipe(sourcemaps.write('./'));
+			}
+			
+			p.pipe(gzip())
+			.pipe(gulp.dest('./dist'));
+	}
+
 
 	rebundle();
 }
 
 gulp.task('js', function (cb) {
-	compile();
+	compile(false, true);
 });
 
 gulp.task('js:watch', function (cb) {
-	compile(true);
+	compile(true, false);
 });
 
 
@@ -48,6 +62,7 @@ gulp.task('sass', () => {
 	return gulp.src('src/sass/main.scss')
 		.pipe(sass().on('error', sass.logError))
 		.pipe(cleanCSS())
+		.pipe(gzip())
 		.pipe(gulp.dest('dist'));
 });
 
