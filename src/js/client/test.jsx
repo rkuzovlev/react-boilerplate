@@ -1,6 +1,7 @@
-var h1 = ReactDOM.render(
-	<h1>Hello, world!</h1>,
-	document.getElementById('example')
-);
+import ReactDOM from 'react-dom';
+import React from 'react';
 
-export { h1 }
+// ReactDOM.render(
+// 	<h1>Hello, world!</h1>,
+// 	document.getElementById('content')
+// );

@@ -7,20 +7,16 @@ function ServerHTML(props) {
 		<html>
 			<head>
 				<meta charSet='utf-8' />
-				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+				<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 
-				<link rel="stylesheet" href="/main.css">
-
-				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-with-addons.js" async></script>
-				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.js" async></script>
-				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react-router/2.4.1/ReactRouter.js" async></script>
+				<link rel="stylesheet" href="/assets/main.css" />
 
 				<title>Title</title>
 				<meta name='description' content="test" />
 			</head>
 			<body>
 				<div id='content' dangerouslySetInnerHTML={ { __html: body } }></div>
-				<script type="text/javascript" src="/app.js"></script>
+				<script type="text/javascript" src="/assets/app.js"></script>
 			</body>
 		</html>
 	)

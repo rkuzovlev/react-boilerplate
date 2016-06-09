@@ -13,15 +13,20 @@ const uglify = require('gulp-uglify');
 const gzip = require('gulp-gzip');
 
 
+const assetsFolder = './dist/assets';
 
 function compile(watch, prod) {
+	
 	var bundler, bf = browserify('src/js/client/app.js', { debug: true });
+	// ['react', 'react-dom', 'react-router'].forEach(m => bf.ignore(m));
+
 
 	if (watch) {
 		bundler = watchify(bf).transform(babelify);
 		bundler.on('update', function() {
-			console.log('-> bundling...');
+			process.stdout.write('-> bundling...');
 			rebundle();
+			process.stdout.write('  done\n');
 		});
 	} else {
 		bundler = bf.transform(babelify);
@@ -39,9 +44,10 @@ function compile(watch, prod) {
 				p = p.pipe(sourcemaps.init({ loadMaps: true }))
 				.pipe(sourcemaps.write('./'));
 			}
-			
-			p.pipe(gzip())
-			.pipe(gulp.dest('./dist'));
+
+			p.pipe(gulp.dest(assetsFolder))
+			.pipe(gzip())
+			.pipe(gulp.dest(assetsFolder));
 	}
 
 
@@ -63,7 +69,7 @@ gulp.task('sass', () => {
 		.pipe(sass().on('error', sass.logError))
 		.pipe(cleanCSS())
 		.pipe(gzip())
-		.pipe(gulp.dest('dist'));
+		.pipe(gulp.dest(assetsFolder));
 });
 
 gulp.task('sass:watch', function () {
@@ -73,17 +79,5 @@ gulp.task('sass:watch', function () {
     });
 });
 
-
-gulp.task('index', function (cb) {
-	return gulp.src('src/index.html')
-		.pipe(copy('dist/', {prefix: 1}))
-});
-
-gulp.task('index:watch', function (cb) {
-	watch('src/index.html', (events, done) => {
-        gulp.start('index');
-    });
-});
-
-gulp.task('build', ['index', 'js', 'sass'])
-gulp.task('default', ['index', 'sass', 'sass:watch', 'js:watch', 'index:watch'])
+gulp.task('build', ['js', 'sass'])
+gulp.task('default', ['sass', 'sass:watch', 'js:watch'])
