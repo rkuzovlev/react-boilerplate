@@ -17,7 +17,7 @@ const assetsFolder = './dist/assets';
 
 function compile(watch, prod) {
 	
-	var bundler, bf = browserify('src/js/client/app.js', { debug: true });
+	var bundler, bf = browserify('src/js/client/app.jsx', { debug: true });
 	// ['react', 'react-dom', 'react-router'].forEach(m => bf.ignore(m));
 
 

@@ -1,38 +1,50 @@
-import React from 'react'
-import { renderToString } from 'react-dom/server'
-import ServerHTML from './../views/index';
 import Iso from 'iso';
 
+import React from 'react'
+import { renderToString } from 'react-dom/server'
+import { match, RouterContext } from 'react-router'
+
+import ServerHTML from './../views/index';
+import routes from './../../client/routes.jsx';
+
+
 export function *index(argument) {
-	const iso = new Iso()
+	match({ routes: routes, location: this.request.url }, (err, redirect, props) => {
+		if (err) {
+			this.throw(500, err.message);
+		
+		} else if (redirect) {
+			this.redirect(redirect.pathname + redirect.search)
+		
+		} else if (!props) {
+			this.throw(404, 'Not Found');
 
-	iso.add('<div>Hello, World!!@!E@Ee12 dfawekjfnalk3bf 	lk1u2be </div>', { someSampleData: 'Hello, World! qdw' })
-	
-	const irender = iso.render()
+		} else {
+			// console.log(RouterContext)
+			// console.log("")
+			// console.log("-------------")
+			// console.log("")
+			// console.log(props)
+			// console.log("")
+			// console.log("-------------")
+			// console.log("")
+			// console.log(renderToString(<RouterContext {...props}/>))
 
-	console.log("irender", irender);
+			const iso = new Iso()
 
-	// const props = { body, assets, locale, title, description }
-	const props = { body: irender, assets: {}, locale: "ru", title: "Title", description: "description" }
-    const html = renderToString(<ServerHTML { ...props } />)
-    this.status = 200;
-    this.body = `<!DOCTYPE html>${html}`
+			iso.add(renderToString(<RouterContext {...props}/>), { someSampleData: 'Hello, World! qdw' })
+
+			// const sProps = { body, assets, locale, title, description }
+			const sProps = { body: iso.render(), assets: {}, locale: "ru", title: "Title", description: "description" }
+			const html = renderToString(<ServerHTML { ...sProps } />)
+
+			this.status = 200;
+			this.body = `<!DOCTYPE html>${html}`
+		}
+	})
 }
 
-
-export function *index2(argument) {
-	const iso = new Iso()
-	
-	// this.body = 'Hello World 2';
-	iso.add('<div>Hello, World!</div>', { someSampleData: 'Hello, World! qdw' })
-	const result = iso.render()
-
-	console.log('result', result);
-
-	this.body = result;
-}
 
 export default {
-	index,
-	index2
+	index
 }
