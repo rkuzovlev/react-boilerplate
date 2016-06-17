@@ -25,8 +25,10 @@ export function *index(argument) {
 			iso.add(renderToString(<RouterContext {...props}/>), { someSampleData: 'Hello, World! qdw' })
 
 			// const sProps = { body, assets, locale, title, description }
-			const sProps = { body: iso.render(), assets: {}, locale: "ru", title: "Title", description: "description" }
-			const html = renderToString(<ServerHTML { ...sProps } />)
+			// const sProps = { body: iso.render(), assets: {}, locale: "ru", title: "Title", description: "description" }
+			// const html = renderToString(<ServerHTML { ...sProps } />)
+
+			const html = ServerHTML("Title", iso.render());
 
 			this.status = 200;
 			this.body = `<!DOCTYPE html>${html}`

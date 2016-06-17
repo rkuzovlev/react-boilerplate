@@ -1,3 +1,22 @@
+export default function render(title, body){
+	return `<html>
+<head>
+	<meta charSet='utf-8' />
+	<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+
+	<link rel="stylesheet" href="/assets/main.css" />
+
+	<title>${title}</title>
+	<meta name='description' content="test" />
+</head>
+<body>
+	<div id='content'>${body}</div>
+	<script type="text/javascript" src="/assets/app.js"></script>
+</body>
+</html>`;
+}
+
+/*
 import React from 'react'
 
 function ServerHTML(props) {
@@ -23,7 +42,7 @@ function ServerHTML(props) {
 }
 
 export default ServerHTML
-
+*/
 
 /*
 
