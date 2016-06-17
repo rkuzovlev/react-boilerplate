@@ -1,6 +1,6 @@
 import koaRouter from 'koa-router'
 
-import dc from './controllers/default'
+import * as dc from './controllers/default'
 
 var router = koaRouter()
 

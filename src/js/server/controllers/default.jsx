@@ -20,16 +20,6 @@ export function *index(argument) {
 			this.throw(404, 'Not Found');
 
 		} else {
-			// console.log(RouterContext)
-			// console.log("")
-			// console.log("-------------")
-			// console.log("")
-			// console.log(props)
-			// console.log("")
-			// console.log("-------------")
-			// console.log("")
-			// console.log(renderToString(<RouterContext {...props}/>))
-
 			const iso = new Iso()
 
 			iso.add(renderToString(<RouterContext {...props}/>), { someSampleData: 'Hello, World! qdw' })
@@ -42,9 +32,4 @@ export function *index(argument) {
 			this.body = `<!DOCTYPE html>${html}`
 		}
 	})
-}
-
-
-export default {
-	index
 }
