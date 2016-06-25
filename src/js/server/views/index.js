@@ -7,7 +7,7 @@ export default function render(title, body){
 	<link rel="stylesheet" href="/assets/main.css" />
 
 	<title>${title}</title>
-	<meta name='description' content="test" />
+	<meta name='description' content="${description}" />
 </head>
 <body>
 	<div id='content'>${body}</div>

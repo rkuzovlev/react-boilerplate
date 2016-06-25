@@ -1,0 +1,22 @@
+{
+	"keys": [ "secret" ],
+	"redis": {
+		"host": "127.0.0.1",
+		"port": 6379
+	}, 
+	"grant": {
+		"server": {
+			"protocol": "http",
+			"host": "example.com"
+		},
+		"facebook": {
+			"key": "",
+			"secret": "",
+			"callback": "/handle_facebook_callback",
+			"scope": [
+				"user_groups",
+				"user_likes"
+			]
+		}
+	}
+}
